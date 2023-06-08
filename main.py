@@ -134,7 +134,30 @@ X_validation = X_validation.reshape(X_validation.shape[0], X_validation.shape[1]
 X_test = X_test.reshape(X_test.shape[0], X_test.shape[1], X_test.shape[2], 1)
 
 
-### IMAGE AUGUMENTATION HERE #####
+# Augmentation of Images: To make it more generic.
+dataGen = ImageDataGenerator(width_shift_range=0.1,
+                             # 0.1 = 10%     If more than 1 E.G. 10 Then it refers to No. of pixels E.G. 10 Pixels
+                             height_shift_range=0.1,
+                             zoom_range=0.2,  # 0.2 Means it can go from 0.8 to 1.2
+                             shear_range=0.1,  # Magnitude of shear angle
+                             rotation_range=10)  # Degrees
+dataGen.fit(X_train)
+batches = dataGen.flow(X_train, y_train,
+                       batch_size=20)  # Requesting Data Generator to generate images, Batch Size = No. of images created each time its called
+X_batch, y_batch = next(batches)
+
+# To show Augmented Image samples
+fig, axs = plt.subplots(1, 15, figsize=(20, 5))
+fig.tight_layout()
+
+for i in range(15):
+    axs[i].imshow(X_batch[i].reshape(imageDimensions[0], imageDimensions[1]))
+    axs[i].axis('off')
+plt.show()
+
+y_train = to_categorical(y_train, noOfClasses)
+y_validation = to_categorical(y_validation, noOfClasses)
+y_test = to_categorical(y_test, noOfClasses)
 
 
 # CONVOLUTIONAL NEURAL NETWORK MODEL
