@@ -38,7 +38,7 @@ def preprocessing(img):
     return img
 
 
-def getCalssName(classNo):
+def getClassName(classNo):
     if classNo == 0:
         return 'Speed Limit 20 km/h'
     elif classNo == 1:
@@ -147,7 +147,7 @@ while True:
     probabilityValue = np.amax(predictions)
     if probabilityValue > threshold:
         # print(getClassName(classIndex))
-        cv2.putText(imgOrignal, str(classIndex) + " " + str(getCalssName(classIndex)), (120, 35), font, 0.75, (0, 0, 255), 2, cv2.LINE_AA)
+        cv2.putText(imgOrignal, str(classIndex) + " " + str(getClassName(classIndex)), (120, 35), font, 0.75, (0, 0, 255), 2, cv2.LINE_AA)
         cv2.putText(imgOrignal, str(round(probabilityValue * 100, 2)) + "%", (180, 75), font, 0.75, (0, 0, 255), 2, cv2.LINE_AA)
     cv2.imshow("Result", imgOrignal)
 
